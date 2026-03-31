@@ -14,7 +14,7 @@ struct HomeView: View {
             Text("Juniper Rodriguez").italic()
             Spacer()
             
-            NavigationLink(destination: BookView(storyPages: [])) {
+            NavigationLink(destination: BookView()) {
                 Label("Begin Reading", systemImage: "book.pages.fill")
             }.buttonStyle(.bordered).padding()
             Button("See Bestiary", systemImage: "pawprint.fill") {}.buttonStyle(.bordered).padding()

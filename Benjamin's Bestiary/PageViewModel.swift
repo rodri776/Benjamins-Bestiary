@@ -13,7 +13,7 @@ class PageViewModel {
     var history: [String] = ["opening"]
     var creature: Creature = Creature()
     var pages: [String: StoryPage] = [:]
-
+    var shouldDismiss: Bool = false
     
     func choose(_ choice: Choice) {
         if let mutation = choice.creatureMutation {

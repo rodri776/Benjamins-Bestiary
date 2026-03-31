@@ -29,7 +29,13 @@ struct PageViewControllerWrapper: UIViewControllerRepresentable {
             creature: Binding(
                 get: { self.viewModel.creature },
                 set: { self.viewModel.creature = $0 }
-            )
+            ),
+            onChoose: { choice in
+                self.viewModel.choose(choice)
+            },
+            onHome: {
+                self.viewModel.shouldDismiss = true
+            }
         ))
         host.view.accessibilityIdentifier = pageID
         return host

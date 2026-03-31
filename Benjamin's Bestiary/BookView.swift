@@ -8,21 +8,20 @@
 import SwiftUI
 
 struct BookView: View {
-    let storyPages: [StoryPage]
-    @State private var creature = Creature()
+    // replaced [UIViewController] pages with PageViewModel to account for non-linear page navigation
+    @State private var viewModel = PageViewModel()
 
     var body: some View {
-        PageViewControllerWrapper(
-            pages: storyPages.map { page in
-                UIHostingController(rootView: StoryPageView(page: page, creature: $creature))
-            }
-        )
+        PageViewControllerWrapper(viewModel: viewModel)
         .ignoresSafeArea()
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .onAppear {
+            viewModel.pages = storyPages
+        }
     }
 }
 
 #Preview {
-    BookView(storyPages: [])
+    BookView()
 }

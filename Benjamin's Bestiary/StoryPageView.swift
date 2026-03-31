@@ -9,6 +9,9 @@ import SwiftUI
 struct StoryPageView: View {
     let page: StoryPage
     @Binding var creature: Creature
+    var onChoose: ((Choice) -> Void)? = nil
+    var onHome: (() -> Void)? = nil
+
     @Environment(\.dismiss) private var dismiss
     
     var body: some View {
@@ -20,7 +23,7 @@ struct StoryPageView: View {
             VStack {
                 // MARK: Home + Progress bar
                 HStack {
-                    Button(action: { dismiss() }) {
+                    Button(action: { onHome?() }) {
                         Image(systemName: "house.fill")
                     }
                     .font(.system(size: 32))
@@ -30,7 +33,7 @@ struct StoryPageView: View {
                    Spacer()
 
                    ProgressView(value: Double(page.pageNum),
-                                total: Double(page.choices.count))
+                                total: 7)
                 }.padding()
                 Spacer()
 
@@ -52,7 +55,7 @@ struct StoryPageView: View {
                         HStack(spacing: 16) {
                             ForEach(Array(page.choices.enumerated()), id: \.offset) { _, choice in
                                 Button(choice.label) {
-                                    choice.action()
+                                    onChoose?(choice)
                                 }
                                 .buttonStyle(.borderedProminent)
                                 
