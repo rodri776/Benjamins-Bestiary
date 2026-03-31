@@ -8,24 +8,39 @@
 import SwiftUI
 struct HomeView: View {
     var body: some View {
-        VStack {
-            Spacer()
-            Text("Benjamin's Bestiary").font(.largeTitle)
-            Text("Juniper Rodriguez").italic()
-            Spacer()
+        ZStack {
+            Image("Background")
+                .resizable()
+                .ignoresSafeArea()
             
-            NavigationLink(destination: BookView()) {
-                Label("Begin Reading", systemImage: "book.pages.fill")
-            }.buttonStyle(.bordered).padding()
-            Button("See Bestiary", systemImage: "pawprint.fill") {}.buttonStyle(.bordered).padding()
-            Spacer()
-            HStack {
+            VStack {
                 Spacer()
-                Button("Settings", systemImage: "gearshape.fill") {}
+                Text("Benjamin's Bestiary")
+                    .font(.custom("InknutAntiqua-bold", size: 64))
+                Text("By Juniper Rodriguez").italic()
+                    .font(.custom("InknutAntiqua-light", size: 24))
                 Spacer()
-                Button("About", systemImage: "person.fill") {}
+                
+                NavigationLink(destination: BookView()) {
+                    Label("Begin Reading", systemImage: "book.pages.fill").padding()
+                }.buttonStyle(.bordered).padding()
+                .font(.custom("InknutAntiqua-semibold", size: 42))
+                NavigationLink(destination: BeastView()) {
+                    Label("See Bestiary", systemImage: "pawprint.fill").padding()
+                }.buttonStyle(.bordered).padding()
+                    .font(.custom("InknutAntiqua-semibold", size: 28))
                 Spacer()
-            }.padding()
+                HStack {
+                    Spacer()
+                    Button("Settings", systemImage: "gearshape.fill") {}
+                        .font(.custom("InknutAntiqua-regular", size: 24))
+                    Spacer()
+                    Button("About", systemImage: "person.fill") {}
+                        .font(.custom("InknutAntiqua-regular", size: 24))
+
+                    Spacer()
+                }.padding()
+            }
         }
     }
 }

@@ -11,8 +11,6 @@ struct StoryPageView: View {
     @Binding var creature: Creature
     var onChoose: ((Choice) -> Void)? = nil
     var onHome: (() -> Void)? = nil
-
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
