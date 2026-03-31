@@ -7,8 +7,6 @@
 import SwiftUI
 
 struct BeastView: View {
-    var onHome: (() -> Void)? = nil
-
     var body: some View {
         ZStack {
             Image("Background")
@@ -16,15 +14,6 @@ struct BeastView: View {
                 .ignoresSafeArea()
             
             VStack {
-                HStack {
-                    Button(action: { onHome?() }) {
-                        Image(systemName: "house.fill")
-                    }
-                    .font(.system(size: 32))
-                    .accessibilityLabel("Home")
-                    .padding()
-                   Spacer()
-                }.padding()
                 Spacer()
                 Text("Your creatures will be shown here.")
                     .multilineTextAlignment(.center)
