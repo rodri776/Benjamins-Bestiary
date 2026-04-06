@@ -13,6 +13,7 @@ struct StoryPage {
     let choices: [Choice]
     let background: Image
     var creatureVisible: Bool = true
+    var showNameField: Bool = false
 }
 
 struct Choice {
@@ -24,18 +25,9 @@ struct Choice {
 }
 
 struct CreatureMutation {
-    /*
-    // Page 2 (biome choice): establishes base palette
-    var biomeBase: BiomeBase? = nil
-
-    // Page 3/4 (food choice): potential mutations based on diet
-    var colorModifier: ColorModifier? = nil
-    var mouthShape: MouthShape? = nil
-    var bodyShape: BodyShape? = nil
-    
-    // Page 5 (encounter outcome): additive, never replaced
-    var extraTrait: ExtraTrait? = nil
-    */
+    var color: Color? = nil
+    var scale: Double? = nil
+    var overlays: [String]? = nil   // image asset names to layer on top (e.g. "Beak", "Glow")
 }
 
 struct Creature {
@@ -43,15 +35,12 @@ struct Creature {
     var color: Color = .white
     var scale: Double = 1.0
     var rotation: Double = 0.0
+    var overlays: [String] = []     // e.g. ["Beak", "Wings"]
 
     mutating func apply(_ mutation: CreatureMutation) {
-        /*
-        if let biomeBase = mutation.biomeBase { self.biomeBase = biomeBase }
-        if let colorModifier = mutation.colorModifier { self.colorModifier = colorModifier }
-        if let mouthShape = mutation.mouthShape { self.mouthShape = mouthShape }
-        if let bodyShape = mutation.BodyShape { self.bodyShape = bodyShape }
-        self.extraTrait = mutation.extraTrait
-        */
+        if let color = mutation.color { self.color = color }
+        if let scale = mutation.scale { self.scale = scale }
+        if let overlays = mutation.overlays { self.overlays.append(contentsOf: overlays) }
     }
 }
 
