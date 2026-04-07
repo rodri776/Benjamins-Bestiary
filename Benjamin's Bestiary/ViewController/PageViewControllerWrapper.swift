@@ -41,7 +41,7 @@ struct PageViewControllerWrapper: UIViewControllerRepresentable {
                 get: { self.viewModel.creature },
                 set: { self.viewModel.creature = $0 }
             ),
-            onChoose: isCurrentPage ? { choice in
+            onChoose: isCurrentPage ? { choice, _ in
                 self.viewModel.choose(choice)
             } : nil,
             onHome: {

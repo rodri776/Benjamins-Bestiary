@@ -26,11 +26,15 @@ struct HomeView: View {
                 
                 NavigationLink(destination: BookView()) {
                     Label("Begin Reading", systemImage: "book.pages.fill").padding()
-                }.buttonStyle(.bordered).padding()
+                }.buttonStyle(.borderedProminent)
+                .tint(Color("ButtonColor").opacity(0.75))
+                .padding()
                 .font(.custom("InknutAntiqua-semibold", size: 42))
                 NavigationLink(destination: BeastView()) {
                     Label("See Bestiary", systemImage: "pawprint.fill").padding()
-                }.buttonStyle(.bordered).padding()
+                }.buttonStyle(.borderedProminent)
+                .tint(Color("ButtonColor").opacity(0.75))
+                .padding()
                     .font(.custom("InknutAntiqua-semibold", size: 28))
                 Spacer()
                 HStack {
@@ -52,6 +56,9 @@ struct HomeView: View {
         .foregroundStyle(Color("TextColor").opacity(0.75))
         .sheet(isPresented: $showParentalGate) {
             ParentalGateView(isUnlocked: $isUnlocked)
+                .presentationDetents([.large])
+                .presentationDragIndicator(.visible)
+                .presentationCompactAdaptation(.fullScreenCover)  // Full width on iPad
         }
         .navigationDestination(isPresented: $isUnlocked) {
             AboutView()

@@ -16,7 +16,8 @@ let storyPages: [String: StoryPage] = [
         text: "Benjamin is the Beastkeeper of Andolonia, a world much like ours thousands of light years away.",
         choices: [Choice(label: "Greet Benjamin", picture: nil, destinationID: "biome_choice", creatureMutation: nil)],
         background: Image("Background1"),
-        creatureVisible: false
+        creatureVisible: false,
+        characterImage: "Benjamin"
     ),
 
     // MARK: - Page 2 — Biome Choice
@@ -38,9 +39,9 @@ let storyPages: [String: StoryPage] = [
         pageNum: 3,
         text: "While exploring the Sea, Benjamin has gathered foods of 3 different kinds. Which of these should he feed to his companion?",
         choices: [
-            Choice(label: "Seaweed",        picture: nil, destinationID: "sea_encounter",  creatureMutation: CreatureMutation(color: .green)),
-            Choice(label: "Invertebrates",  picture: nil, destinationID: "sea_encounter",  creatureMutation: CreatureMutation(color: .pink, overlays: ["Beak"])),
-            Choice(label: "Fish",           picture: nil, destinationID: "sea_encounter",  creatureMutation: CreatureMutation(overlays: ["Gills", "Teeth"]))
+            Choice(label: "Seaweed",        picture: "FoodSeaSeaweed",    destinationID: "sea_encounter",  creatureMutation: CreatureMutation(color: .green)),
+            Choice(label: "Invertebrates",  picture: "FoodSeaShellfish",  destinationID: "sea_encounter",  creatureMutation: CreatureMutation(color: .pink, overlays: ["SmallBeak"])),
+            Choice(label: "Fish",           picture: "FoodSeaFish",       destinationID: "sea_encounter",  creatureMutation: CreatureMutation(overlays: ["Creature-Fish"]))
         ],
         background: Image("BackgroundSea")
     ),
@@ -51,9 +52,9 @@ let storyPages: [String: StoryPage] = [
         pageNum: 3,
         text: "While exploring the Flower Forest, Benjamin has gathered foods of 3 different kinds. Which of these should he feed to his companion?",
         choices: [
-            Choice(label: "Petals",      picture: nil, destinationID: "forest_encounter",  creatureMutation: CreatureMutation(color: .pink)),
-            Choice(label: "Berries",     picture: nil, destinationID: "forest_encounter",  creatureMutation: CreatureMutation(color: Color(red: 0.5, green: 0.0, blue: 0.8), scale: 3.0)),
-            Choice(label: "Birds",       picture: nil, destinationID: "forest_encounter",  creatureMutation: CreatureMutation(overlays: ["Talons", "VultureBeak"]))
+            Choice(label: "Petals",      picture: "FoodFlowerPetals",  destinationID: "forest_encounter",  creatureMutation: CreatureMutation(color: .pink)),  // Only color, no overlay yet
+            Choice(label: "Berries",     picture: "FoodFlowerBerries", destinationID: "forest_encounter",  creatureMutation: CreatureMutation(color: Color(red: 0.5, green: 0.0, blue: 0.8), scale: 3.0)),
+            Choice(label: "Birds",       picture: "FoodFlowerBirds",   destinationID: "forest_encounter",  creatureMutation: CreatureMutation(overlays: ["VultureBeak"]))
         ],
         background: Image("BackgroundFlower")
     ),
@@ -64,9 +65,9 @@ let storyPages: [String: StoryPage] = [
         pageNum: 3,
         text: "While exploring the Unknown, Benjamin has gathered foods of 3 different kinds. Which of these should he feed to his companion?",
         choices: [
-            Choice(label: "Leaves", picture: nil, destinationID: "unknown_encounter",  creatureMutation: CreatureMutation(color: .gray)),
-            Choice(label: "Fruit",  picture: nil, destinationID: "unknown_encounter",  creatureMutation: CreatureMutation(overlays: ["Beak", "Wings"])),
-            Choice(label: "Void",   picture: nil, destinationID: "naming",  creatureMutation: CreatureMutation(overlays: ["void"]))
+            Choice(label: "Leaves", picture: "FoodUnknownLeaves", destinationID: "unknown_encounter",  creatureMutation: CreatureMutation(color: .gray)),
+            Choice(label: "Fruit",  picture: "FoodUnknownFruit",  destinationID: "unknown_encounter",  creatureMutation: CreatureMutation(overlays: ["LargeBeak"])),
+            Choice(label: "Void",   picture: "FoodUnknownVoid",   destinationID: "naming",  creatureMutation: CreatureMutation(overlays: ["FoodUnknownVoid"]))
         ],
         background: Image("BackgroundUnknown")
     ),
@@ -78,10 +79,11 @@ let storyPages: [String: StoryPage] = [
         pageNum: 4,
         text: "While on the journey back home, Benjamin and his creature run into Moby Dick. Would you like to battle or hide?",
         choices: [
-            Choice(label: "Battle", picture: nil, destinationID: "death",  creatureMutation: nil), // DEATH OUTCOME
-            Choice(label: "Hide",   picture: nil, destinationID: "naming", creatureMutation: nil)  // TODO: creature gains ripple pattern
+            Choice(label: "Battle", picture: nil, destinationID: "death",  creatureMutation: nil),
+            Choice(label: "Hide",   picture: nil, destinationID: "naming", creatureMutation: nil)
         ],
-        background: Image("BackgroundSea")
+        background: Image("BackgroundSea"),
+        characterImage: "SeaMobyDick"
     ),
 
     "forest_encounter": StoryPage(
@@ -89,10 +91,11 @@ let storyPages: [String: StoryPage] = [
         pageNum: 4,
         text: "While on the journey back home, Benjamin and his creature run into an Exterminator. Would you like to battle or hide?",
         choices: [
-            Choice(label: "Battle", picture: nil, destinationID: "naming", creatureMutation: nil), // TODO: creature grows spikes and a gas mask
-            Choice(label: "Hide",   picture: nil, destinationID: "naming", creatureMutation: nil)  // TODO: creature gains colorful flower pattern
+            Choice(label: "Battle", picture: nil, destinationID: "naming", creatureMutation: CreatureMutation(overlays: ["SpikeOverlay"])),
+            Choice(label: "Hide",   picture: nil, destinationID: "naming", creatureMutation: CreatureMutation(overlays: ["FlowerOverlay"]))  // FlowerOverlay when hiding!
         ],
-        background: Image("BackgroundFlower")
+        background: Image("BackgroundFlower"),
+        characterImage: "FlowerExterminator"
     ),
 
     "unknown_encounter": StoryPage(
@@ -100,10 +103,11 @@ let storyPages: [String: StoryPage] = [
         pageNum: 4,
         text: "While on the journey back home, Benjamin and his creature run into The Grand Soothsayer. Would you like to battle or hide?",
         choices: [
-            Choice(label: "Battle", picture: nil, destinationID: "naming", creatureMutation: nil), // TODO: creature gains a third eye and a purple glow
-            Choice(label: "Hide",   picture: nil, destinationID: "naming", creatureMutation: nil)  // TODO: creature becomes 50% transparent
+            Choice(label: "Battle", picture: nil, destinationID: "naming", creatureMutation: nil),
+            Choice(label: "Hide",   picture: nil, destinationID: "naming", creatureMutation: CreatureMutation(overlays: ["PurpleGlow"]))  // Purple glow when hiding!
         ],
-        background: Image("BackgroundUnknown")
+        background: Image("BackgroundUnknown"),
+        characterImage: "UnknownSoothsayer"
     ),
 
     // MARK: - Death Outcome
@@ -115,7 +119,8 @@ let storyPages: [String: StoryPage] = [
             Choice(label: "Try Again", picture: nil, destinationID: "opening", creatureMutation: nil)
         ],
         background: Image("Background"),
-        creatureVisible: false
+        creatureVisible: false,
+        characterImage: "Skull+Crossbones"
     ),
 
     // MARK: - Page 5 — Naming

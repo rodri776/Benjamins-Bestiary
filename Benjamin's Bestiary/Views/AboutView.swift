@@ -28,8 +28,9 @@ struct AboutView: View {
                     .font(.custom("InknutAntiqua-SemiBold", size: 24))
                     .opacity(0.7)
                 Spacer()
-                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras mollis blandit pharetra. Integer dictum, mauris in luctus imperdiet, tellus orci venenatis augue, id iaculis odio lorem a massa. Sed efficitur quam ut facilisis convallis. Maecenas vitae mollis orci. Ut ligula est, iaculis nec tortor non, venenatis lobortis ante.")
+                Text("Juniper is a computer science graduate student at the University of Chicago with a penchant for building quirky and imaginative iOS apps.")
                     .font(.custom("InknutAntiqua-medium", size: 24))
+                    .multilineTextAlignment(.center)
                     .padding(75)
                 Spacer()
             }

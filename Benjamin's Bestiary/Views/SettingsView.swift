@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @AppStorage("kAutoplayPreference") private var autoPlay = false
-    @AppStorage("kTapToPlayPreference") private var tapToPlay = false
+    @AppStorage("kTapToPlayPreference") private var tapToPlay = true  // Default to true so button is visible
 
     var body: some View {
         ZStack {

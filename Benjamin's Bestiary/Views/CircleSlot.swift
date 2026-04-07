@@ -20,9 +20,9 @@ struct CircleSlot: View {
                 ZStack {
                     Circle()
                         .strokeBorder(
-                            style: StrokeStyle(lineWidth: 2, dash: [4, 4])
+                            style: StrokeStyle(lineWidth: 4, dash: [6, 6])
                         )
-                        .foregroundColor(.gray.opacity(0.6))
+                        .foregroundColor(Color("TextColor").opacity(0.75))
 
                     DrawingViewControllerWrapper(
                         onCircleValidated: {

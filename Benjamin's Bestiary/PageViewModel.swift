@@ -22,6 +22,10 @@ class PageViewModel {
         let defaults = UserDefaults.standard
         defaults.removeObject(forKey: "kBookmarkPageID")
         defaults.removeObject(forKey: "kBookmarkHistory")
+        defaults.removeObject(forKey: "kBookmarkCreatureColor")
+        defaults.removeObject(forKey: "kBookmarkCreatureScale")
+        defaults.removeObject(forKey: "kBookmarkCreatureRotation")
+        defaults.removeObject(forKey: "kBookmarkCreatureOverlays")
     }
     
     func choose(_ choice: Choice) {
@@ -43,14 +47,34 @@ class PageViewModel {
     
     func nameCreature(_ name: String) {
         creature.name = name
+        
+        // Save creature to bestiary
+        BestiaryManager.shared.saveCreature(creature)
+        
+        // Play sparkle sound effect when creature added to bestiary
+        SoundManager.shared.playSoundEffect(named: "Sparkle", withExtension: "mp3")
+        
         history.append("bestiary")
         currentPageID = "bestiary"
     }
     
     func saveBookmark() {
+        // Don't save bookmarks for naming page or beyond
+        guard currentPageID != "naming" && currentPageID != "bestiary" else {
+            return
+        }
+        
         let defaults = UserDefaults.standard
         defaults.set(currentPageID, forKey: "kBookmarkPageID")
         defaults.set(history, forKey: "kBookmarkHistory")
+        
+        // Save creature state
+        if let colorData = try? JSONEncoder().encode(creature.color.toRGBA()) {
+            defaults.set(colorData, forKey: "kBookmarkCreatureColor")
+        }
+        defaults.set(creature.scale, forKey: "kBookmarkCreatureScale")
+        defaults.set(creature.rotation, forKey: "kBookmarkCreatureRotation")
+        defaults.set(creature.overlays, forKey: "kBookmarkCreatureOverlays")
     }
 
     func restoreBookmark() {
@@ -59,6 +83,19 @@ class PageViewModel {
            let savedHistory = defaults.stringArray(forKey: "kBookmarkHistory") {
             currentPageID = savedPageID
             history = savedHistory
+            
+            // Restore creature state
+            if let colorData = defaults.data(forKey: "kBookmarkCreatureColor"),
+               let rgba = try? JSONDecoder().decode(RGBAColor.self, from: colorData) {
+                creature.color = rgba.toColor()
+            }
+            creature.scale = defaults.double(forKey: "kBookmarkCreatureScale")
+            if creature.scale == 0 { creature.scale = 1.0 } // default if not saved
+            creature.rotation = defaults.double(forKey: "kBookmarkCreatureRotation")
+            if let overlays = defaults.stringArray(forKey: "kBookmarkCreatureOverlays") {
+                creature.overlays = overlays
+            }
         }
     }
 }
+
